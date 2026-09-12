@@ -28,6 +28,7 @@ from app.db.base import Base
 from app.models.users import User
 from app.models.properties import Property
 from app.models.room_type import RoomType
+from app.models.room_instance import RoomInstance
 
 target_metadata = Base.metadata
 
