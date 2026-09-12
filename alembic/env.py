@@ -27,6 +27,7 @@ if config.config_file_name is not None:
 from app.db.base import Base
 from app.models.users import User
 from app.models.properties import Property
+from app.models.room_type import RoomType
 
 target_metadata = Base.metadata
 
