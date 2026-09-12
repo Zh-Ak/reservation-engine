@@ -29,6 +29,7 @@ from app.models.users import User
 from app.models.properties import Property
 from app.models.room_type import RoomType
 from app.models.room_instance import RoomInstance
+from app.models.booking import Booking
 
 target_metadata = Base.metadata
 
