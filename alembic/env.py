@@ -30,6 +30,7 @@ from app.models.properties import Property
 from app.models.room_type import RoomType
 from app.models.room_instance import RoomInstance
 from app.models.booking import Booking
+from app.models.notification_log import NotificationLog
 
 target_metadata = Base.metadata
 
