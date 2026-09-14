@@ -22,3 +22,4 @@ class User(Base):
     email: Mapped[str] = mapped_column(unique=True)
     role: Mapped[UserRole] = mapped_column(Enum(UserRole))
     created_at: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
+    password_hash: Mapped[str] = mapped_column()
