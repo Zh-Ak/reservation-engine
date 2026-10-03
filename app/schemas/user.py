@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 import enum
 import datetime
 import uuid
@@ -22,3 +22,5 @@ class UserResponse(BaseModel):
     email: EmailStr
     created_at: datetime.datetime
     role: UserRole
+
+    model_config = ConfigDict(from_attributes=True)
