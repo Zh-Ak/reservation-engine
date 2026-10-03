@@ -1,4 +1,3 @@
-from app.main import app
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 from fastapi.concurrency import run_in_threadpool
