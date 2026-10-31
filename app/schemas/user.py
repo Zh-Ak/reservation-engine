@@ -34,7 +34,7 @@ class UserResponse(BaseModel):
 
 class UserLogin(BaseModel):
     email: EmailStr
-    passwods: str
+    password: str
 
 class TokenResponse(BaseModel):
     access_token: str
