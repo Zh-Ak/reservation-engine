@@ -1,20 +1,26 @@
-from passlib.context import CryptContext
-
 import datetime
 
+import bcrypt
 import jwt
 
 from app.config import settings
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+BCRYPT_MAX_BYTES = 72
+
 
 def hash_password(plain_password: str) -> str:
-    return pwd_context.hash(plain_password)
+    return bcrypt.hashpw(plain_password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    password_bytes = plain_password.encode("utf-8")
+    if len(password_bytes) > BCRYPT_MAX_BYTES:
+        return False
+    return bcrypt.checkpw(password_bytes, hashed_password.encode("utf-8"))
+
 
 DUMMY_HASH = hash_password("this-password-belongs-to-nobody")
 
-def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
 
 def create_access_token(user_id: str) -> str:
     expire = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(
@@ -22,3 +28,13 @@ def create_access_token(user_id: str) -> str:
     )
     payload = {"sub": user_id, "exp": expire}
     return jwt.encode(payload, settings.secret_key, algorithm=settings.algorithm)
+
+
+def decode_access_token(token: str) -> str:
+    payload = jwt.decode(
+        token,
+        settings.secret_key,
+        algorithms=[settings.algorithm],
+        options={"require": ["sub", "exp"]},
+    )
+    return payload["sub"]

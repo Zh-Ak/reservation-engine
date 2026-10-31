@@ -1,15 +1,19 @@
-from sqlalchemy.orm import mapped_column, Mapped
-from sqlalchemy import ForeignKey, func, Numeric
-
-import uuid
 import datetime
 import decimal
+import uuid
+
+from sqlalchemy import CheckConstraint, ForeignKey, Numeric, func
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
 
 
 class RoomType(Base):
     __tablename__ = "room_types"
+    __table_args__ = (
+        CheckConstraint("price > 0", name="ck_room_types_price_positive"),
+        CheckConstraint("capacity > 0", name="ck_room_types_capacity_positive"),
+    )
 
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
     property_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("properties.id"), index=True)
