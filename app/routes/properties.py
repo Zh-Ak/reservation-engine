@@ -6,7 +6,8 @@ from app.dependencies.auth import ProviderDep
 from app.dependencies.db import SessionDep
 from app.routes.pagination import Limit, Offset
 from app.schemas.property import PropertyCreate, PropertyResponse, PropertyUpdate
-from app.services import property_service
+from app.schemas.room import RoomTypeCreate, RoomTypeResponse
+from app.services import property_service, room_service
 
 router = APIRouter(prefix="/properties", tags=["properties"])
 
@@ -36,3 +37,17 @@ async def update_property(
 @router.delete("/{property_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_property(property_id: uuid.UUID, owner: ProviderDep, session: SessionDep):
     await property_service.delete_property(session, property_id, owner)
+
+
+@router.post(
+    "/{property_id}/room-types", response_model=RoomTypeResponse, status_code=status.HTTP_201_CREATED
+)
+async def create_room_type(
+    property_id: uuid.UUID, data: RoomTypeCreate, owner: ProviderDep, session: SessionDep
+):
+    return await room_service.create_room_type(session, property_id, owner, data)
+
+
+@router.get("/{property_id}/room-types", response_model=list[RoomTypeResponse])
+async def list_room_types(property_id: uuid.UUID, session: SessionDep):
+    return await room_service.list_room_types(session, property_id)
