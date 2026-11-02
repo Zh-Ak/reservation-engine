@@ -43,3 +43,11 @@ class EmailAlreadyExistsError(ConflictError):
 
 class LoginFailedError(AuthenticationError):
     detail = "Incorrect email or password"
+
+
+class RoomNotAvailableError(ConflictError):
+    detail = "No room of this type is available for these dates"
+
+
+class BookingNotCancellableError(ConflictError):
+    detail = "This booking can no longer be cancelled"

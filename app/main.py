@@ -7,6 +7,7 @@ from app.routes.auth import router as auth_router
 from app.routes.properties import router as properties_router
 from app.routes.rooms import router as rooms_router
 from app.routes.search import router as search_router
+from app.routes.bookings import router as bookings_router
 
 app = FastAPI(title="Reservation Engine")
 
@@ -15,6 +16,7 @@ app.include_router(users_router)
 app.include_router(properties_router)
 app.include_router(rooms_router)
 app.include_router(search_router)
+app.include_router(bookings_router)
 
 
 @app.exception_handler(AppError)

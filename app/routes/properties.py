@@ -8,6 +8,8 @@ from app.routes.pagination import Limit, Offset
 from app.schemas.property import PropertyCreate, PropertyResponse, PropertyUpdate
 from app.schemas.room import RoomTypeCreate, RoomTypeResponse
 from app.services import property_service, room_service
+from app.schemas.booking import BookingResponse
+from app.services import booking_service, property_service, room_service
 
 router = APIRouter(prefix="/properties", tags=["properties"])
 
@@ -51,3 +53,10 @@ async def create_room_type(
 @router.get("/{property_id}/room-types", response_model=list[RoomTypeResponse])
 async def list_room_types(property_id: uuid.UUID, session: SessionDep):
     return await room_service.list_room_types(session, property_id)
+
+
+@router.get("/{property_id}/bookings", response_model=list[BookingResponse])
+async def list_property_bookings(
+    property_id: uuid.UUID, owner: ProviderDep, session: SessionDep, limit: Limit = 20, offset: Offset = 0
+):
+    return await booking_service.list_property_bookings(session, property_id, owner, limit, offset)
