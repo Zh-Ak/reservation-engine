@@ -7,7 +7,6 @@ from app.dependencies.db import SessionDep
 from app.routes.pagination import Limit, Offset
 from app.schemas.property import PropertyCreate, PropertyResponse, PropertyUpdate
 from app.schemas.room import RoomTypeCreate, RoomTypeResponse
-from app.services import property_service, room_service
 from app.schemas.booking import BookingResponse
 from app.services import booking_service, property_service, room_service
 
